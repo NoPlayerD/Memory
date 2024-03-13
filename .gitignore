@@ -1,0 +1,5 @@
+/Memory/.vs/*
+/Memory/Server/obj/*
+/Memory/Server/bin/*
+/Memory/Client/obj/*
+/Memory/Client/bin/*
