@@ -3,6 +3,9 @@
 - It uses multi-class classification to classify your inputs so you can use it in many scenarios
 - (Example Scenarios: functions of a coding language / food recipes / some infos about shortcuts of your OS / ...)
 
+## Latest Release:
+[For Win x64](https://github.com/NoPlayerD/Memory/releases/tag/Self-Contained)
+
 ## How it works?
 1. Create a .csv file like this;
 
