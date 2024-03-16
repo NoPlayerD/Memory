@@ -9,6 +9,8 @@ namespace Client
         string mPath;
         string aPath;
 
+        bool ctrl = false;
+
         #region Useless
         public Form1()
         {
@@ -28,7 +30,7 @@ namespace Client
         //Prompt textbox
         private void richTextBox1_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = string.Empty;
+            if (ctrl == false) { richTextBox1.Text = string.Empty; ctrl = true; }
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -50,10 +52,11 @@ namespace Client
         //Reset button
         private void button3_Click(object sender, EventArgs e)
         {
-            richTextBox1.Text = "Enter your prompt here and press ENTER after it.. Possible predictions will appear on the side. If you click one of them, then it's data will be shown on the under side, if not; the prediction that has the most score's data will be shown..";
+            richTextBox1.Text = "Enter your prompt here and press ENTER after it.. 'Predicted Category' and the 'Possible Categories' will appear on the bottom side. After it, the Data will be shown on right side..";
             textBox1.Text = string.Empty;
             textBox2.Text = string.Empty;
             listBox1.Items.Clear();
+            listBox2.Items.Clear();
             pPath = string.Empty;
         }
 
@@ -66,7 +69,23 @@ namespace Client
                 mPath = pPath.Remove(pPath.LastIndexOf("\\") + 1);
             }
             Temp();
+            LB();
+        }
 
+        //Load categories to the listbox
+        void LB()
+        {
+            var Lines = File.ReadAllLines($"{aPath}categories.txt");
+            foreach (var Line in Lines)
+            {
+                listBox2.Items.Add(Line);
+            }
+        }
+
+        //Open the Data file
+        void OD(string name)
+        {
+            textBox2.Text = File.ReadAllText($"{aPath}/data/{name}.txt");
         }
 
         //When Enter pressed
@@ -74,12 +93,12 @@ namespace Client
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Predict();
+                Predict(richTextBox1.Text);
             }
         }
 
         //Predict with the loaded model
-        void Predict()
+        void Predict(string prompt)
         {
             string predictm = string.Empty;
 
@@ -92,7 +111,7 @@ namespace Client
 
                 var eng = context.Model.CreatePredictionEngine<Input, Output>(savedModel, schema);
 
-                var tahminim = eng.Predict(new Input { startLine = richTextBox1.Text });
+                var tahminim = eng.Predict(new Input { startLine = prompt });
 
                 listBox1.Items.Clear();
                 listBox1.Items.Add(tahminim.PredictedLabel);
@@ -108,7 +127,7 @@ namespace Client
             #region ReadData
             try
             {
-                textBox2.Text = File.ReadAllText($"{aPath}/data/{predictm}.txt");
+                OD(predictm);
             }
             catch { }
 
@@ -145,5 +164,21 @@ namespace Client
             catch { }
         }
 
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OD(listBox2.SelectedItem.ToString());
+
+            listBox1.Items.Clear();
+            listBox1.Items.Add(listBox2.SelectedItem.ToString());
+        }
+
+        //Warning Button
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string msg = "When you 'Load' your project, a directory named 'TMP.-.Project' will be created in the location where your project.zip file located." +
+                "So if you have any folder named like that, move your project file or the folder.. If application stops by an error, delete that file to use application properly.";
+
+            MessageBox.Show(msg);
+        }
     }
 }

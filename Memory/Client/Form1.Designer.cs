@@ -37,6 +37,7 @@
             listBox1 = new ListBox();
             textBox2 = new TextBox();
             listBox2 = new ListBox();
+            button4 = new Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -154,6 +155,21 @@
             listBox2.Name = "listBox2";
             listBox2.Size = new Size(287, 62);
             listBox2.TabIndex = 7;
+            listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
+            // 
+            // button4
+            // 
+            button4.BackColor = Color.Transparent;
+            button4.FlatStyle = FlatStyle.Flat;
+            button4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button4.ForeColor = Color.Brown;
+            button4.Location = new Point(693, 263);
+            button4.Name = "button4";
+            button4.Size = new Size(21, 23);
+            button4.TabIndex = 8;
+            button4.Text = "!";
+            button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // Form1
             // 
@@ -161,6 +177,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(714, 286);
+            Controls.Add(button4);
             Controls.Add(listBox2);
             Controls.Add(textBox2);
             Controls.Add(listBox1);
@@ -189,5 +206,6 @@
         private ListBox listBox1;
         private TextBox textBox2;
         private ListBox listBox2;
+        private Button button4;
     }
 }
