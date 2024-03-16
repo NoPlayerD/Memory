@@ -6,6 +6,7 @@ namespace Client
     public partial class Form1 : Form
     {
         string pPath;
+        string mPath;
         public Form1()
         {
             InitializeComponent();
@@ -19,9 +20,11 @@ namespace Client
         //Browse Button
         private void button1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowDialog();
-            textBox1.Text = fbd.SelectedPath;
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "Project Files|*.zip";
+            fd.Multiselect=false;
+            fd.ShowDialog();
+            textBox1.Text = fd.FileName;
         }
 
         //Prompt textbox
@@ -49,11 +52,13 @@ namespace Client
         //Project Load button
         private void button2_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(textBox1.Text))
+            if (File.Exists(textBox1.Text))
             {
                 pPath = textBox1.Text;
+                mPath = pPath.Remove(pPath.LastIndexOf("\\"));
+                MessageBox.Show(mPath);
             }
-            Temp();
+            //Temp();
 
         }
 
