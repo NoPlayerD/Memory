@@ -14,6 +14,7 @@ Welcome();
 
 #region Welcome
 
+// First page
 void Welcome()
 {
     Console.Title= "(Server) Memory";
@@ -27,6 +28,7 @@ void Welcome()
 
 #region Continue
 
+// Second page
 void Continue()
 {
     AAM CModel = new AAM();
@@ -40,6 +42,7 @@ void Continue()
 
 #region Help
 
+// Help menu
 void Help()
 {
     Console.WriteLine("Help Menu: \n");

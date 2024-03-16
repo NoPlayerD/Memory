@@ -65,7 +65,15 @@ public class AAM
                 Environment.Exit(0);
             }
             SelectLocation();
-            Context.Model.Save(BModel, trainData.Schema, $"{MyPath}/Model.zip");
+            Directory.CreateDirectory(MyPath+"/prjTMP");
+            Context.Model.Save(BModel, trainData.Schema, $"{MyPath}/prjTMP/Model.zip");
+
+            #region Copying DataSet
+            
+            File.Copy(path, $"{MyPath}/prjTMP/dataSet.csv");
+            CS(path);
+            #endregion
+
             #endregion
 
         }
@@ -85,6 +93,7 @@ public class AAM
 
     }
 
+    // Locatin Selector for Project
     void SelectLocation()
     {
         Console.Clear();
@@ -99,5 +108,41 @@ public class AAM
             SelectLocation();
         }
     }
+
+    
+    //Category Splitter
+    void CS(string path)
+    {
+        string filePath = path; // CSV dosyanızın yolu
+        HashSet<string> uniqueValues = new HashSet<string>();
+
+        using (StreamReader sr = new StreamReader(filePath))
+        {
+            string line;
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] parts = line.Split(',');
+
+                if (parts.Length >= 2) // En az 2 sütun olduğunu kontrol edin
+                {
+                    uniqueValues.Add(parts[1]); // 2. sütundaki değeri ekleyin
+                }
+            }
+        }
+
+        string loc = $"{MyPath}/prjTMP/categories.txt";
+
+        FileStream fs = new FileStream(loc, FileMode.OpenOrCreate);
+
+        foreach (string value in uniqueValues)
+        {
+            string vv = $"{value}\n";
+            byte[] bytm = Encoding.UTF8.GetBytes(vv);
+            fs.Write(bytm, 0, bytm.Length);
+        }
+        fs.Close();
+    }
+
 
 }

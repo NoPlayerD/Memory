@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using Microsoft.ML.Data;
 
+
+# region I/O Classes for Model Training
+
 public class Input
 {
 
@@ -24,3 +27,4 @@ public class Output
     [ColumnName("Score")]
     public float[] Score { get; set; }
 }
+#endregion
