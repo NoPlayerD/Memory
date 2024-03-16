@@ -78,11 +78,12 @@
             groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(textBox1);
             groupBox1.Controls.Add(button2);
+            groupBox1.Controls.Add(richTextBox1);
             groupBox1.Controls.Add(button1);
             groupBox1.ForeColor = SystemColors.ControlLightLight;
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(287, 93);
+            groupBox1.Size = new Size(287, 172);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Project";
@@ -105,11 +106,11 @@
             richTextBox1.BackColor = Color.Black;
             richTextBox1.BorderStyle = BorderStyle.FixedSingle;
             richTextBox1.ForeColor = SystemColors.Window;
-            richTextBox1.Location = new Point(12, 111);
+            richTextBox1.Location = new Point(6, 91);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(287, 75);
+            richTextBox1.Size = new Size(275, 75);
             richTextBox1.TabIndex = 4;
-            richTextBox1.Text = "Enter your prompt here and press ENTER after it.. 'Predicted Category' and the 'Possible Categories' will appear on the top right side. After it, the Data will be shown on right side..";
+            richTextBox1.Text = "Enter your prompt here and press ENTER after it.. 'Predicted Category' and the 'Possible Categories' will appear on the bottom side. After it, the Data will be shown on right side..";
             richTextBox1.Click += richTextBox1_Click;
             richTextBox1.TextChanged += richTextBox1_TextChanged;
             richTextBox1.KeyDown += richTextBox1_KeyDown;
@@ -121,9 +122,9 @@
             listBox1.ForeColor = SystemColors.Window;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(305, 88);
+            listBox1.Location = new Point(12, 260);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(187, 17);
+            listBox1.Size = new Size(287, 17);
             listBox1.TabIndex = 5;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
@@ -131,12 +132,16 @@
             // 
             textBox2.BackColor = Color.FromArgb(15, 15, 15);
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(305, 111);
+            textBox2.Dock = DockStyle.Right;
+            textBox2.ForeColor = SystemColors.Info;
+            textBox2.Location = new Point(317, 0);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
             textBox2.ReadOnly = true;
-            textBox2.Size = new Size(187, 75);
+            textBox2.ScrollBars = ScrollBars.Both;
+            textBox2.Size = new Size(397, 286);
             textBox2.TabIndex = 6;
+            textBox2.WordWrap = false;
             // 
             // listBox2
             // 
@@ -145,9 +150,9 @@
             listBox2.ForeColor = SystemColors.InactiveCaption;
             listBox2.FormattingEnabled = true;
             listBox2.ItemHeight = 15;
-            listBox2.Location = new Point(305, 20);
+            listBox2.Location = new Point(12, 192);
             listBox2.Name = "listBox2";
-            listBox2.Size = new Size(187, 62);
+            listBox2.Size = new Size(287, 62);
             listBox2.TabIndex = 7;
             // 
             // Form1
@@ -155,11 +160,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(504, 196);
+            ClientSize = new Size(714, 286);
             Controls.Add(listBox2);
             Controls.Add(textBox2);
             Controls.Add(listBox1);
-            Controls.Add(richTextBox1);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;

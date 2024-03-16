@@ -7,24 +7,16 @@ namespace Client
     {
         string pPath;
         string mPath;
+        string aPath;
+
+        #region Useless
         public Form1()
         {
             InitializeComponent();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-
-        //Browse Button
-        private void button1_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog fd = new OpenFileDialog();
-            fd.Filter = "Project Files|*.zip";
-            fd.Multiselect=false;
-            fd.ShowDialog();
-            textBox1.Text = fd.FileName;
         }
 
         //Prompt textbox
@@ -37,6 +29,22 @@ namespace Client
         private void richTextBox1_Click(object sender, EventArgs e)
         {
             richTextBox1.Text = string.Empty;
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        //Browse Button
+        private void button1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Filter = "Project Files|*.zip";
+            fd.Multiselect = false;
+            fd.ShowDialog();
+            textBox1.Text = fd.FileName;
         }
 
         //Reset button
@@ -55,10 +63,9 @@ namespace Client
             if (File.Exists(textBox1.Text))
             {
                 pPath = textBox1.Text;
-                mPath = pPath.Remove(pPath.LastIndexOf("\\"));
-                MessageBox.Show(mPath);
+                mPath = pPath.Remove(pPath.LastIndexOf("\\") + 1);
             }
-            //Temp();
+            Temp();
 
         }
 
@@ -75,12 +82,13 @@ namespace Client
         void Predict()
         {
             string predictm = string.Empty;
+
             #region Predicting
             try
             {
                 MLContext context = new MLContext();
 
-                var savedModel = context.Model.Load(@$"{pPath}/Model.zip", out DataViewSchema schema);
+                var savedModel = context.Model.Load(@$"{aPath}/Model.zip", out DataViewSchema schema);
 
                 var eng = context.Model.CreatePredictionEngine<Input, Output>(savedModel, schema);
 
@@ -100,7 +108,7 @@ namespace Client
             #region ReadData
             try
             {
-                textBox2.Text = File.ReadAllText($"{pPath}/data/{predictm}.txt");
+                textBox2.Text = File.ReadAllText($"{aPath}/data/{predictm}.txt");
             }
             catch { }
 
@@ -112,14 +120,15 @@ namespace Client
         {
             try
             {
-                ZipFile.ExtractToDirectory($"{pPath}/data.zip", $"{pPath}/data/");
+                aPath = $"{mPath}/TMP.-.Project/";
+                ZipFile.ExtractToDirectory(pPath, aPath);
             }
             catch (Exception ex)
             {
                 try
                 {
-                    Directory.Delete($"{pPath}/data/");
-                    ZipFile.ExtractToDirectory($"{pPath}/data.zip", $"{pPath}/data/");
+                    Directory.Delete(aPath);
+                    ZipFile.ExtractToDirectory(pPath, aPath);
                 }
                 catch
                 {
@@ -132,13 +141,9 @@ namespace Client
         //At closing
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            try { Directory.Delete($"{pPath}/data", true); }
+            try { Directory.Delete(aPath, true); }
             catch { }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
